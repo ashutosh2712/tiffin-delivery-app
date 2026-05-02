@@ -1,12 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const OrdersScreen = () => {
+export default function subscriptions() {
   return (
     <View>
-      <Text>Orders Screen</Text>
+      <Text>subscriptions</Text>
     </View>
   );
-};
-
-export default OrdersScreen;
+}

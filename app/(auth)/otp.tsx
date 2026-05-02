@@ -32,7 +32,7 @@ const otp = () => {
 
         <TouchableOpacity
           className="bg-[#42CA82] py-4 rounded-xl w-full"
-          onPress={() => router.push("/(auth)/otp")}
+          onPress={() => router.push("/(tabs)")}
         >
           <Text className="text-white text-center font-semibold">
             Verify & Continue
