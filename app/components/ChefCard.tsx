@@ -1,7 +1,9 @@
+import { useRouter } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 const ChefCard = ({ chef }: any) => {
+  const router = useRouter();
   return (
     <View className="flex-row bg-white rounded-2xl p-4 mb-5 border border-gray-100">
       {/* Image */}
@@ -28,7 +30,10 @@ const ChefCard = ({ chef }: any) => {
         </View>
 
         {/* Button */}
-        <TouchableOpacity className="bg-[#42CA82] py-4 rounded-[10px] w-[112px] h-fit mt-2">
+        <TouchableOpacity
+          onPress={() => router.push(`/chef/${chef.id}`)}
+          className="bg-[#42CA82] py-4 rounded-[10px] w-[112px] h-fit mt-2"
+        >
           <Text className="text-white text-center font-semibold text-[14px]">
             View Plans
           </Text>
