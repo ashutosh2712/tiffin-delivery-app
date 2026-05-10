@@ -44,7 +44,7 @@ const ChefDetail = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      {/* 🔙 Back Button */}
+      {/* Back Button */}
       <View className="absolute top-12 left-5 z-10">
         <TouchableOpacity
           onPress={() => router.back()}
@@ -125,7 +125,10 @@ const ChefDetail = () => {
 
       {/* Subscribe Button */}
       <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-5 py-3 mb-4">
-        <TouchableOpacity className="bg-[#42CA82] py-4 rounded-xl">
+        <TouchableOpacity
+          className="bg-[#42CA82] py-4 rounded-xl"
+          onPress={() => router.push("/subscription/confirm")}
+        >
           <Text className="text-white text-center font-semibold">
             Subscribe • ₹3000
           </Text>
