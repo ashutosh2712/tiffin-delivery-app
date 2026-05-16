@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 const ConfirmSubscription = () => {
   const router = useRouter();
+
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -228,7 +229,10 @@ const ConfirmSubscription = () => {
 
       {/* Sticky Button */}
       <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-5 py-4 mb-4">
-        <TouchableOpacity className="bg-[#42CA82] py-4 rounded-xl">
+        <TouchableOpacity
+          onPress={() => router.push("/payment")}
+          className="bg-[#42CA82] py-4 rounded-xl"
+        >
           <Text className="text-white text-center font-semibold text-[16px]">
             Proceed to Payment • ₹3000
           </Text>
