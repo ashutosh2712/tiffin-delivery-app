@@ -139,7 +139,10 @@ const PaymentScreen = () => {
 
       {/* Sticky Button */}
       <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-5 py-4">
-        <TouchableOpacity className="bg-[#42CA82] py-4 rounded-xl">
+        <TouchableOpacity
+          className="bg-[#42CA82] py-4 rounded-xl"
+          onPress={() => router.push("/payment/success")}
+        >
           <Text className="text-white text-center font-semibold text-[16px]">
             Pay ₹3000
           </Text>
