@@ -1,8 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function subscriptions() {
+  const router = useRouter();
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
@@ -75,7 +77,10 @@ export default function subscriptions() {
 
           <View className="flex-row justify-between">
             {/* Pause */}
-            <TouchableOpacity className="bg-gray-50 rounded-2xl p-4 items-center flex-1 mr-2">
+            <TouchableOpacity
+              className="bg-gray-50 rounded-2xl p-4 items-center flex-1 mr-2"
+              onPress={() => router.push("/subscription/pause")}
+            >
               <Ionicons name="pause-outline" size={22} color="#111827" />
 
               <Text className="mt-2 font-medium text-gray-900">Pause</Text>
