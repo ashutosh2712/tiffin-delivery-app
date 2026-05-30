@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -50,7 +51,11 @@ const ProfileScreen = () => {
           <Text className="text-sm text-gray-500 mb-2">Account</Text>
 
           <View className="bg-white rounded-2xl border border-gray-100 px-4">
-            <MenuItem icon="location-outline" title="Addresses" />
+            <MenuItem
+              icon="location-outline"
+              title="Addresses"
+              onPress={() => router.push("/profile/addresses")}
+            />
 
             <View className="h-[1px] bg-gray-100" />
 
