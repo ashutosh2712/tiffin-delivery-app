@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 
 const AddressCard = ({ label, address, nameContact, isDefault }: any) => {
@@ -23,7 +24,17 @@ const AddressCard = ({ label, address, nameContact, isDefault }: any) => {
       </Text>
       <Text className="text-[#6B7280] text-[12px] mt-2">{nameContact}</Text>
       <View className="flex-row mt-4">
-        <TouchableOpacity className="flex-row items-center mr-6">
+        <TouchableOpacity
+          className="flex-row items-center mr-6"
+          onPress={() =>
+            router.push({
+              pathname: "/profile/address-form",
+              params: {
+                id: String(address.id),
+              },
+            })
+          }
+        >
           <Ionicons name="create-outline" size={18} color="#42CA82" />
 
           <Text className="text-[#42CA82] font-medium ml-1">Edit</Text>

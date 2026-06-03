@@ -44,7 +44,7 @@ const addresses = [
 
 const Addresses = () => {
   return (
-    <SafeAreaView className="flex-1 bg-white px-5 items-center">
+    <SafeAreaView className="flex-1 bg-white">
       {/* Header */}
       {/* Back Button */}
       <View className="absolute top-12 left-5 z-10 mt-2">
@@ -80,9 +80,12 @@ const Addresses = () => {
       </ScrollView>
       {/* Add New Address Button */}
       <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-5 py-4">
-        <TouchableOpacity className="bg-[#42CA82] py-4 rounded-xl">
+        <TouchableOpacity
+          className="bg-[#42CA82] py-4 rounded-xl"
+          onPress={() => router.push("/profile/address-form")}
+        >
           <Text className="text-white text-center font-semibold">
-            Add New Address
+            + Add New Address
           </Text>
         </TouchableOpacity>
       </View>
