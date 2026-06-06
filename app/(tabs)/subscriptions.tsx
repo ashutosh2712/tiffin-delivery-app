@@ -87,7 +87,10 @@ export default function subscriptions() {
             </TouchableOpacity>
 
             {/* Edit */}
-            <TouchableOpacity className="bg-gray-50 rounded-2xl p-4 items-center flex-1 ml-2">
+            <TouchableOpacity
+              className="bg-gray-50 rounded-2xl p-4 items-center flex-1 ml-2"
+              onPress={() => router.push("/subscription/settings")}
+            >
               <Ionicons name="create-outline" size={22} color="#111827" />
 
               <Text className="mt-2 font-medium text-gray-900">Modify</Text>
