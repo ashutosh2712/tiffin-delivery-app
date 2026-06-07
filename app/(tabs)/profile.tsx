@@ -59,7 +59,11 @@ const ProfileScreen = () => {
 
             <View className="h-[1px] bg-gray-100" />
 
-            <MenuItem icon="restaurant-outline" title="Subscription Settings" />
+            <MenuItem
+              icon="restaurant-outline"
+              title="Subscription Settings"
+              onPress={() => router.push("/subscription/settings-preferences")}
+            />
           </View>
         </View>
         {/* Support Section */}
@@ -67,11 +71,19 @@ const ProfileScreen = () => {
           <Text className="text-sm text-gray-500 mb-2">Support</Text>
 
           <View className="bg-white rounded-2xl border border-gray-100 px-4">
-            <MenuItem icon="help-circle-outline" title="Help Center" />
+            <MenuItem
+              icon="help-circle-outline"
+              title="Help Center"
+              onPress={() => router.push("/support/help-center")}
+            />
 
             <View className="h-[1px] bg-gray-100" />
 
-            <MenuItem icon="call-outline" title="Contact Support" />
+            <MenuItem
+              icon="call-outline"
+              title="Contact Support"
+              onPress={() => router.push("/support/contact")}
+            />
           </View>
         </View>
         {/* Preferences Section */}
@@ -79,11 +91,19 @@ const ProfileScreen = () => {
           <Text className="text-sm text-gray-500 mb-2">Preferences</Text>
 
           <View className="bg-white rounded-2xl border border-gray-100 px-4">
-            <MenuItem icon="notifications-outline" title="Notifications" />
+            <MenuItem
+              icon="notifications-outline"
+              title="Notifications"
+              onPress={() => router.push("/notifications")}
+            />
 
             <View className="h-[1px] bg-gray-100" />
 
-            <MenuItem icon="shield-outline" title="Privacy Policy" />
+            <MenuItem
+              icon="shield-outline"
+              title="Privacy Policy"
+              onPress={() => router.push("/profile/privacy-policy")}
+            />
           </View>
         </View>
         {/* Logout */}
