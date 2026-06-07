@@ -128,6 +128,7 @@ const ProfileScreen = () => {
               setShowLogoutModal(false);
 
               // logout logic
+              router.replace("/(auth)/login");
             }}
           />
         </View>

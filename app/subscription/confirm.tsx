@@ -167,8 +167,8 @@ const ConfirmSubscription = () => {
             </View>
 
             <Text className="text-[#111827] mt-2 ml-2">
-              Flat 302, Green Residency 6th Cross, 18th Main Whitefield,
-              Bangalore – 560095
+              Flat 302, Green Residency 6th Cross, 18th Main Whitefield,
+              Bangalore - 560095
             </Text>
 
             <Text className="text-[#6B7280] mt-2 ml-2">
@@ -176,10 +176,20 @@ const ConfirmSubscription = () => {
             </Text>
 
             <View className="h-[1px] bg-[#F44336] my-3" />
-            <View className="flex-row justify-end items-center gap-1 mr-2">
+            <TouchableOpacity
+              className="flex-row justify-end items-center gap-1 mr-2"
+              onPress={() =>
+                router.push({
+                  pathname: "/profile/address-form",
+                  params: {
+                    id: String(1), // Pass the address ID for editing
+                  },
+                })
+              }
+            >
               <Text className="text-[#F44336] mb-2 mr-1 text-[12px]">Edit</Text>
               <Image source={require("../../assets/images/edit.png")} />
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
 
