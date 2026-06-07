@@ -1,8 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import ConfirmModal from "./ConfirmModal";
 
 const AddressCard = ({ label, address, nameContact, isDefault }: any) => {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   return (
     <View className="bg-white border border-gray-100 rounded-2xl p-10 mb-4">
       <View className="flex-row justify-between">
@@ -40,11 +43,27 @@ const AddressCard = ({ label, address, nameContact, isDefault }: any) => {
           <Text className="text-[#42CA82] font-medium ml-1">Edit</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity className="flex-row items-center">
+        <TouchableOpacity
+          className="flex-row items-center"
+          onPress={() => setShowDeleteModal(true)}
+        >
           <Ionicons name="trash-outline" size={18} color="#EF4444" />
 
           <Text className="text-red-500 font-medium ml-1">Delete</Text>
         </TouchableOpacity>
+        <ConfirmModal
+          visible={showDeleteModal}
+          title="Delete Address"
+          message="Are you sure you want to remove this address?"
+          confirmText="Delete"
+          destructive
+          onCancel={() => setShowDeleteModal(false)}
+          onConfirm={() => {
+            setShowDeleteModal(false);
+
+            // delete logic
+          }}
+        />
       </View>
     </View>
   );

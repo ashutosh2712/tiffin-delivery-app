@@ -3,9 +3,12 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ConfirmModal from "../components/ConfirmModal";
 
 const Settings = () => {
   const [mealType, setMealType] = useState("Lunch");
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showPauseModal, setShowPauseModal] = useState(false);
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -92,18 +95,50 @@ const Settings = () => {
             Subscription Actions
           </Text>
 
-          <TouchableOpacity className="bg-[#f6f7c2] rounded-xl p-4 mb-3">
+          <TouchableOpacity
+            className="bg-[#f6f7c2] rounded-xl p-4 mb-3"
+            onPress={() => setShowPauseModal(true)}
+          >
             <Text className="text-[#111827] font-medium">
               Pause Subscription
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity className="bg-red-50 rounded-xl p-4">
+          <TouchableOpacity
+            className="bg-red-50 rounded-xl p-4"
+            onPress={() => setShowCancelModal(true)}
+          >
             <Text className="text-red-500 font-medium">
               Cancel Subscription
             </Text>
           </TouchableOpacity>
         </View>
+        <ConfirmModal
+          visible={showPauseModal}
+          title="Subscription Paused"
+          message="Meals paused till 20 May.Deliveries will resume automatically."
+          confirmText="Okay"
+          destructive
+          onCancel={() => setShowPauseModal(false)}
+          onConfirm={() => {
+            setShowPauseModal(false);
+
+            // later API call
+          }}
+        />
+        <ConfirmModal
+          visible={showCancelModal}
+          title="Cancel Subscription"
+          message="Are you sure you want to cancel your subscription? Your upcoming deliveries will stop immediately."
+          confirmText="Cancel Subscription"
+          destructive
+          onCancel={() => setShowCancelModal(false)}
+          onConfirm={() => {
+            setShowCancelModal(false);
+
+            // later API call
+          }}
+        />
       </ScrollView>
       {/* Sticky Save Button */}
       <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-5 py-4">

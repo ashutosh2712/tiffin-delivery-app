@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ConfirmModal from "../components/ConfirmModal";
 
 const MenuItem = ({ icon, title, onPress }: any) => (
   <TouchableOpacity
@@ -18,6 +20,7 @@ const MenuItem = ({ icon, title, onPress }: any) => (
   </TouchableOpacity>
 );
 const ProfileScreen = () => {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   return (
     <SafeAreaView className="flex-1 bg-white">
       {/* Header */}
@@ -108,9 +111,25 @@ const ProfileScreen = () => {
         </View>
         {/* Logout */}
         <View className="px-5 mt-10 mb-10">
-          <TouchableOpacity className="border border-red-200 py-4 rounded-xl">
+          <TouchableOpacity
+            className="border border-red-200 py-4 rounded-xl"
+            onPress={() => setShowLogoutModal(true)}
+          >
             <Text className="text-red-500 text-center font-medium">Logout</Text>
           </TouchableOpacity>
+          <ConfirmModal
+            visible={showLogoutModal}
+            title="Logout"
+            message="Are you sure you want to logout from your account?"
+            confirmText="Logout"
+            destructive
+            onCancel={() => setShowLogoutModal(false)}
+            onConfirm={() => {
+              setShowLogoutModal(false);
+
+              // logout logic
+            }}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
