@@ -13,10 +13,216 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// enum types for various fields in the schema
+enum AddressType {
+  HOME
+  OFFICE
+  OTHER
+}
+
+enum MealType {
+  LUNCH
+  DINNER
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+  COMPLETED
+}
+
+enum OrderStatus {
+  PENDING
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
 model User {
   id        String   @id @default(cuid())
   phone     String   @unique
   name      String?
   email     String?
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  addresses     Address[]
+  subscriptions Subscription[]
+  payments      Payment[]
+  notifications Notification[]
+}
+
+model Address {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  type     AddressType
+  flat     String
+  street   String
+  landmark String?
+  city     String
+  pincode  String
+
+  isDefault Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscriptions Subscription[]
+
+  @@index([userId])
+}
+
+model Kitchen {
+  id String @id @default(cuid())
+
+  name        String
+  description String?
+  cuisineType String
+
+  rating Float @default(0)
+
+  imageUrl String?
+
+  deliveryTime Int?
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  mealPlans MealPlan[]
+  orders    Order[]
+
+  @@index([rating])
+}
+
+model MealPlan {
+  id String @id @default(cuid())
+
+  kitchenId String
+  kitchen   Kitchen @relation(fields: [kitchenId], references: [id])
+
+  title String
+
+  mealType MealType
+
+  durationDays Int
+
+  price Decimal @db.Decimal(10, 2)
+
+  pricePerMeal Decimal @db.Decimal(10, 2)
+
+  isVeg Boolean @default(true)
+
+  isActive Boolean @default(true)
+
+  imageUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscriptions Subscription[]
+
+  @@index([kitchenId])
+}
+
+model Subscription {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  mealPlanId String
+  mealPlan   MealPlan @relation(fields: [mealPlanId], references: [id])
+
+  addressId String
+  address   Address @relation(fields: [addressId], references: [id])
+
+  status SubscriptionStatus @default(ACTIVE)
+
+  startDate DateTime
+  endDate   DateTime
+
+  pauseStart DateTime?
+  pauseEnd   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders   Order[]
+  payments Payment[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model Order {
+  id String @id @default(cuid())
+
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+
+  kitchenId String
+  kitchen   Kitchen @relation(fields: [kitchenId], references: [id])
+
+  deliveryDate DateTime
+
+  mealType MealType
+
+  status OrderStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([subscriptionId])
+  @@index([deliveryDate])
+}
+
+model Payment {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+
+  razorpayOrderId String?
+
+  amount Decimal @db.Decimal(10, 2)
+
+  status PaymentStatus @default(PENDING)
+
+  paidAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Notification {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  title   String
+  message String
+
+  isRead Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }

@@ -7,9 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon ./src/index.mjs",
     "start": "node ./src/index.mjs",
-    "prisma:studio": "prisma studio --schema=prisma/schema.prisma",
+    "dev": "ts-node-dev --respawn src/server.ts",
+    "prisma:validate": "dotenv -e ../.env -- prisma validate",
+    "prisma:format": "dotenv -e ../.env -- prisma format",
+    "prisma:generate": "dotenv -e ../.env -- prisma generate",
     "prisma:migrate": "dotenv -e ../.env -- prisma migrate dev",
-    "prisma:generate": "dotenv -e ../.env -- prisma generate"
+    "prisma:studio": "dotenv -e ../.env -- prisma studio"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +27,7 @@
     "prisma": "^5.22.0"
   },
   "devDependencies": {
+    "dotenv-cli": "^11.0.0",
     "nodemon": "^3.1.14"
   },
   "type": "module"
