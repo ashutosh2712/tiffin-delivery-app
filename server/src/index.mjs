@@ -11,9 +11,17 @@ dotenv.config({
 
 import express from "express";
 import kitchenRoutes from "./modules/kitchens/kitchen.routes.mjs";
+import authRoutes from "./modules/auth/auth.routes.mjs";
 
 const app = express();
 
+// Parse JSON request body
+app.use(express.json());
+
+// Parse form-urlencoded data
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/auth", authRoutes);
 app.use("/api/kitchens", kitchenRoutes);
 
 const PORT = process.env.PORT || 3000;
