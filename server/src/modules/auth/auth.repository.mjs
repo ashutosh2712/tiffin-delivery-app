@@ -15,3 +15,11 @@ export async function createUser(phone) {
     },
   });
 }
+
+export async function findUserById(id) {
+  return prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+}

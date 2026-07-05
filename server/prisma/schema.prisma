@@ -66,12 +66,15 @@ model Address {
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  type     AddressType
-  flat     String
-  street   String
-  landmark String?
-  city     String
-  pincode  String
+  type      AddressType
+  flat      String
+  street    String
+  landmark  String?
+  city      String
+  pincode   String
+  latitude  Float?
+  longitude Float?
+  label     String?
 
   isDefault Boolean @default(false)
 
