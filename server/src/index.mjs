@@ -13,6 +13,7 @@ import express from "express";
 import kitchenRoutes from "./modules/kitchens/kitchen.routes.mjs";
 import authRoutes from "./modules/auth/auth.routes.mjs";
 import addressRoutes from "./modules/address/address.routes.mjs";
+import subscriptionRoutes from "./modules/subscription/subscription.routes.mjs";
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/kitchens", kitchenRoutes);
 app.use("/api/addresses", addressRoutes);
+app.use("/api/subscriptions", subscriptionRoutes);
 
 const PORT = process.env.PORT || 3000;
 

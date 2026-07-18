@@ -26,6 +26,7 @@ enum MealType {
 }
 
 enum SubscriptionStatus {
+  PENDING
   ACTIVE
   PAUSED
   CANCELLED
