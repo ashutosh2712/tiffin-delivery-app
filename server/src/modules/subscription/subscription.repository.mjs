@@ -66,8 +66,8 @@ export function update(id, data) {
 /**
  * Activate subscription
  */
-export function activate(id) {
-  return prisma.subscription.update({
+export function activate(id, tx = prisma) {
+  return tx.subscription.update({
     where: {
       id,
     },
@@ -75,12 +75,12 @@ export function activate(id) {
       status: "ACTIVE",
     },
     include: {
-      address: true,
       mealPlan: {
         include: {
           kitchen: true,
         },
       },
+      address: true,
     },
   });
 }

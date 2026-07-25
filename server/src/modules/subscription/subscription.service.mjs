@@ -1,4 +1,6 @@
 import * as subscriptionRepository from "./subscription.repository.mjs";
+import * as orderService from "../order/order.service.mjs";
+import { prisma } from "../../lib/prisma.mjs";
 
 /**
  * Create Subscription
@@ -85,7 +87,16 @@ export async function activateSubscription(userId, subscriptionId) {
     throw new Error("Only pending subscriptions can be activated.");
   }
 
-  return subscriptionRepository.activate(subscriptionId);
+  return prisma.$transaction(async (tx) => {
+    const activatedSubscription = await subscriptionRepository.activate(
+      subscriptionId,
+      tx,
+    );
+
+    await orderService.generateOrders(activatedSubscription, tx);
+
+    return activatedSubscription;
+  });
 }
 
 /**

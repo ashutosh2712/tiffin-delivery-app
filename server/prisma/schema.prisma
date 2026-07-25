@@ -34,7 +34,7 @@ enum SubscriptionStatus {
 }
 
 enum OrderStatus {
-  PENDING
+  UPCOMING
   PREPARING
   OUT_FOR_DELIVERY
   DELIVERED
@@ -59,6 +59,7 @@ model User {
   subscriptions Subscription[]
   payments      Payment[]
   notifications Notification[]
+  orders        Order[]
 }
 
 model Address {
@@ -83,6 +84,7 @@ model Address {
   updatedAt DateTime @updatedAt
 
   subscriptions Subscription[]
+  orders        Order[]
 
   @@index([userId])
 }
@@ -137,6 +139,7 @@ model MealPlan {
   updatedAt DateTime @updatedAt
 
   subscriptions Subscription[]
+  orders        Order[]
 
   @@index([kitchenId])
 }
@@ -174,23 +177,33 @@ model Subscription {
 model Order {
   id String @id @default(cuid())
 
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
   subscriptionId String
   subscription   Subscription @relation(fields: [subscriptionId], references: [id])
 
-  kitchenId String
-  kitchen   Kitchen @relation(fields: [kitchenId], references: [id])
+  mealPlanId String
+  mealPlan   MealPlan @relation(fields: [mealPlanId], references: [id])
+
+  addressId String
+  address   Address @relation(fields: [addressId], references: [id])
 
   deliveryDate DateTime
 
   mealType MealType
 
-  status OrderStatus @default(PENDING)
+  status OrderStatus @default(UPCOMING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  kitchen   Kitchen? @relation(fields: [kitchenId], references: [id])
+  kitchenId String?
 
+  @@index([userId])
   @@index([subscriptionId])
   @@index([deliveryDate])
+  @@index([status])
 }
 
 model Payment {
