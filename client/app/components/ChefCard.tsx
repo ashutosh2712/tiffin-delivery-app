@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import React from "react";
+
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 const ChefCard = ({ chef }: any) => {

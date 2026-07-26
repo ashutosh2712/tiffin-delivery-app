@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import OrderCard from "../components/OrderCard";
+import OrderCard from "@/app/components/OrderCard";
+import { useRouter } from "expo-router";
 
 const orders = [
   {
@@ -31,6 +32,7 @@ const filters = [
 
 const OrdersScreen = () => {
   const [selectedFilter, setSelectedFilter] = useState("All");
+  const router = useRouter();
   return (
     <SafeAreaView className="flex-1 bg-white">
       {/* Header */}
@@ -162,7 +164,11 @@ const OrdersScreen = () => {
           Recent Deliveries
         </Text>
         {orders.map((order, index) => (
-          <OrderCard key={index} order={order} />
+          <OrderCard
+            key={order.id}
+            order={order}
+            onPress={() => router.push(`/orders/${order.id}`)}
+          />
         ))}
       </View>
     </SafeAreaView>
