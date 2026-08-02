@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView, TouchableOpacity, View, Text, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 // const ACTIONS = {
 //   UPCOMING: {
@@ -33,6 +33,10 @@ import { useRouter } from "expo-router";
 
 const OrderDetailsScreen = () => {
   const router = useRouter();
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const handleReview = () => {
+    router.push(`/orders/${id}/review`);
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
@@ -54,7 +58,7 @@ const OrderDetailsScreen = () => {
           {/* Kitchen Image */}
           <View className="relative">
             <Image
-              source={require("../../../assets/images/chef-img.jpg")}
+              source={require("../../../../assets/images/chef-img.jpg")}
               className="w-full h-52"
               resizeMode="cover"
             />
@@ -306,7 +310,7 @@ const OrderDetailsScreen = () => {
           </View>
         </View>
         {/* Order details */}
-        <View className="mx-5 mt-5 mb-32 bg-white rounded-3xl p-5">
+        <View className="mx-5 mt-5 mb-8 bg-white rounded-3xl p-5">
           {/* Header */}
           <View className="flex-row items-center">
             <Ionicons name="document-text-outline" size={22} color="#16A34A" />
@@ -364,6 +368,13 @@ const OrderDetailsScreen = () => {
             </View>
           </View>
         </View>
+        {/* Review section */}
+        <TouchableOpacity
+          onPress={handleReview}
+          className="bg-[#42CA82] rounded-2xl py-4 items-center mb-32 ml-2 mr-2"
+        >
+          <Text className="text-white text-lg font-semibold">Leave Review</Text>
+        </TouchableOpacity>
       </ScrollView>
       <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-5 py-4">
         <TouchableOpacity className="bg-red-500 rounded-2xl py-4 items-center">
