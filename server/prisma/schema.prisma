@@ -60,6 +60,7 @@ model User {
   payments      Payment[]
   notifications Notification[]
   orders        Order[]
+  reviews       Review[]
 }
 
 model Address {
@@ -109,6 +110,7 @@ model Kitchen {
 
   mealPlans MealPlan[]
   orders    Order[]
+  reviews   Review[]
 
   @@index([rating])
 }
@@ -199,6 +201,7 @@ model Order {
   updatedAt DateTime @updatedAt
   kitchen   Kitchen? @relation(fields: [kitchenId], references: [id])
   kitchenId String?
+  reviews   Review[]
 
   @@index([userId])
   @@index([subscriptionId])
@@ -242,4 +245,34 @@ model Notification {
   createdAt DateTime @default(now())
 
   @@index([userId])
+}
+
+model Review {
+  id String @id @default(uuid())
+
+  orderId   String @unique
+  userId    String
+  kitchenId String
+
+  rating  Int
+  comment String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  kitchen Kitchen @relation(fields: [kitchenId], references: [id])
+
+  photos ReviewPhoto[]
+}
+
+model ReviewPhoto {
+  id       String @id @default(uuid())
+  reviewId String
+  imageUrl String
+
+  createdAt DateTime @default(now())
+
+  review Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
 }
