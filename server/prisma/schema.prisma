@@ -31,6 +31,7 @@ enum SubscriptionStatus {
   PAUSED
   CANCELLED
   COMPLETED
+  EXPIRED
 }
 
 enum OrderStatus {
@@ -45,6 +46,8 @@ enum PaymentStatus {
   PENDING
   SUCCESS
   FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
 }
 
 model User {
@@ -213,22 +216,38 @@ model Payment {
   id String @id @default(cuid())
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+
+  user User @relation(fields: [userId], references: [id])
 
   subscriptionId String
-  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
 
-  razorpayOrderId String?
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
 
+  // Razorpay references
+  razorpayOrderId String? @unique
+
+  razorpayPaymentId String? @unique
+
+  // Amount
   amount Decimal @db.Decimal(10, 2)
 
+  currency String @default("INR")
+
+  // Payment method
+  paymentMethod String?
+
+  // Status
   status PaymentStatus @default(PENDING)
 
   paidAt DateTime?
 
   createdAt DateTime @default(now())
 
+  updatedAt DateTime @updatedAt
+
   @@index([userId])
+  @@index([subscriptionId])
+  @@index([status])
 }
 
 model Notification {

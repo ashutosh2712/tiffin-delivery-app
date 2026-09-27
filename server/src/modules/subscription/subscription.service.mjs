@@ -72,8 +72,15 @@ export async function getCurrentSubscription(userId) {
 /**
  * Activate Subscription
  */
-export async function activateSubscription(userId, subscriptionId) {
-  const subscription = await subscriptionRepository.findById(subscriptionId);
+export async function activateSubscription(
+  userId,
+  subscriptionId,
+  tx = prisma,
+) {
+  const subscription = await subscriptionRepository.findById(
+    subscriptionId,
+    tx,
+  );
 
   if (!subscription) {
     throw new Error("Subscription not found.");
@@ -87,16 +94,14 @@ export async function activateSubscription(userId, subscriptionId) {
     throw new Error("Only pending subscriptions can be activated.");
   }
 
-  return prisma.$transaction(async (tx) => {
-    const activatedSubscription = await subscriptionRepository.activate(
-      subscriptionId,
-      tx,
-    );
+  const activatedSubscription = await subscriptionRepository.activate(
+    subscriptionId,
+    tx,
+  );
 
-    await orderService.generateOrders(activatedSubscription, tx);
+  await orderService.generateOrders(activatedSubscription, tx);
 
-    return activatedSubscription;
-  });
+  return activatedSubscription;
 }
 
 /**

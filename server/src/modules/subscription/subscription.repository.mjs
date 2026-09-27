@@ -34,8 +34,8 @@ export function findCurrentByUserId(userId) {
 /**
  * Find subscription by ID
  */
-export function findById(id) {
-  return prisma.subscription.findUnique({
+export function findById(id, tx = prisma) {
+  return tx.subscription.findUnique({
     where: {
       id,
     },
